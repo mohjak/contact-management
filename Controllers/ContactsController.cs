@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Mohjak.ContactManagement.Entities;
-using Mohjak.ContactManagement.Models;
+using Mohjak.ContactManagement.DTOs;
 using Mohjak.ContactManagement.Services;
 using MongoDB.Driver;
 using System.Collections.Generic;
+using Mohjak.ContactManagement.Models;
+using System.Threading.Tasks;
 
 namespace Mohjak.ContactManagement.Controllers
 {
@@ -35,15 +37,16 @@ namespace Mohjak.ContactManagement.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Contact> Create(Contact contact)
+        public ActionResult<Contact> Create(ContactDTO contact)
         {
             try
             {
-                _contactService.Create(contact);
+                var createdContact = _contactService.Create(contact);
+
+                return CreatedAtRoute("GetContact", new { id = createdContact.Id.ToString() }, createdContact);
             }
             catch (MongoWriteException ex)
             {
-
                 if (ex.WriteError.Category == ServerErrorCategory.DuplicateKey)
                 {
                     return BadRequest(new Message
@@ -53,8 +56,45 @@ namespace Mohjak.ContactManagement.Controllers
                 }
             }
 
+            return BadRequest(new Message { Text = "An error occurred trying to insert contact document." });
+        }
 
-            return CreatedAtRoute("GetContact", new { id = contact.Id.ToString() }, contact);
+        [HttpPut("{id:length(24)}")]
+        public IActionResult Update(string id, ContactDTO contactDTO)
+        {
+            var contact = _contactService.Get(id);
+
+            if (contact == null)
+            {
+                return NotFound();
+            }
+
+            _contactService.Update(id, contactDTO);
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id:length(24)}")]
+        public IActionResult Delete(string id)
+        {
+            var contact = _contactService.Get(id);
+
+            if (contact == null)
+            {
+                return NotFound();
+            }
+
+            _contactService.Remove(contact.Id);
+
+            return NoContent();
+        }
+
+        [HttpGet("search")]
+         public async Task<IActionResult> Search(string term)
+        {
+            var result = await _contactService.Search(term);
+
+            return Ok(result);
         }
     }
 }

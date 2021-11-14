@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
-using Mohjak.ContactManagement.Entities;
 using Mohjak.ContactManagement.Services;
 
 namespace Mohjak.ContactManagement
@@ -29,6 +28,7 @@ namespace Mohjak.ContactManagement
                 sp.GetRequiredService<IOptions<ContactManagementDatabaseSettings>>().Value);
 
             services.AddSingleton<ContactService>();
+            services.AddSingleton<CompanyService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

@@ -2,14 +2,14 @@
 using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
 
-namespace Mohjak.ContactManagement.Entities
+namespace Mohjak.ContactManagement.DTOs
 {
-    public class Contact : BaseEntity
+    public class ContactDTO : BaseDTO
     {
         [BsonElement("name")]
         public string Name { get; set; }
 
         [BsonElement("companies")]
-        public IList<ObjectId> Companies { get; set; }
+        public IList<string> Companies { get; set; }
     }
 }
