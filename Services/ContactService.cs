@@ -5,6 +5,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Mohjak.ContactManagement.Services
 {
@@ -28,6 +29,15 @@ namespace Mohjak.ContactManagement.Services
 
         public List<Contact> Get() =>
             _contacts.Find(contact => true).ToList();
+
+        public async Task<List<Contact>> Search(string term)
+        {
+            var filter = Builders<Contact>.Filter.Regex("name", new BsonRegularExpression(".*" + term + ".*"));
+            
+            var data = await(await _contacts.FindAsync<Contact>(filter).ConfigureAwait(false)).ToListAsync();
+
+            return data;
+        }
 
         public Contact Get(string id) =>
             _contacts.Find(contact => contact.Id == id).FirstOrDefault();
