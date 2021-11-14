@@ -1,10 +1,12 @@
 ﻿using Mohjak.ContactManagement.DTOs;
 using Mohjak.ContactManagement.Entities;
 using Mohjak.ContactManagement.Helpers;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Mohjak.ContactManagement.Services
 {
@@ -55,5 +57,14 @@ namespace Mohjak.ContactManagement.Services
 
         public void Remove(string id) =>
             _companies.DeleteOne(contact => contact.Id == id);
+
+        public async Task<List<Company>> Search(string term)
+        {
+            var filter = Builders<Company>.Filter.Regex("name", new BsonRegularExpression(".*" + term + ".*"));
+
+            var data = await (await _companies.FindAsync<Company>(filter).ConfigureAwait(false)).ToListAsync();
+
+            return data;
+        }
     }
 }
