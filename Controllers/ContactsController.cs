@@ -35,11 +35,13 @@ namespace Mohjak.ContactManagement.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Contact> Create(Contact contact)
+        public ActionResult<Contact> Create(ContactDTO contact)
         {
             try
             {
-                _contactService.Create(contact);
+                var createdContact = _contactService.Create(contact);
+
+                return CreatedAtRoute("GetContact", new { id = createdContact.Id.ToString() }, createdContact);
             }
             catch (MongoWriteException ex)
             {
@@ -53,8 +55,7 @@ namespace Mohjak.ContactManagement.Controllers
                 }
             }
 
-
-            return CreatedAtRoute("GetContact", new { id = contact.Id.ToString() }, contact);
+            return BadRequest(new Message { Text = "An error occurred trying to insert contact document." });
         }
     }
 }

@@ -9,7 +9,6 @@ namespace Mohjak.ContactManagement.Entities
         [BsonElement("name")]
         public string Name { get; set; }
 
-
         [BsonElement("companies")]
         public IList<ObjectId> Companies { get; set; }
     }

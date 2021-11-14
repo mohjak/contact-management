@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
-using Mohjak.ContactManagement.Entities;
 using Mohjak.ContactManagement.Services;
 
 namespace Mohjak.ContactManagement
