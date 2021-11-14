@@ -5,6 +5,7 @@ using Mohjak.ContactManagement.Services;
 using MongoDB.Driver;
 using System.Collections.Generic;
 using Mohjak.ContactManagement.Models;
+using System.Threading.Tasks;
 
 namespace Mohjak.ContactManagement.Controllers
 {
@@ -86,6 +87,14 @@ namespace Mohjak.ContactManagement.Controllers
             _contactService.Remove(contact.Id);
 
             return NoContent();
+        }
+
+        [HttpGet("search")]
+         public async Task<IActionResult> Search(string term)
+        {
+            var result = await _contactService.Search(term);
+
+            return Ok(result);
         }
     }
 }
