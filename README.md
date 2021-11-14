@@ -117,5 +117,9 @@ Web API application to manage Extendable Customers data (simple contact manageme
 }
 ```
 
+## Simple Filters
+
+Simple filtering by search term.
+
 ## License
 [MIT](LICENSE)
