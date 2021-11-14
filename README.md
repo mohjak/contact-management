@@ -30,5 +30,92 @@ Web API application to manage Extendable Customers data (simple contact manageme
 - Feel free to use any other technologies you think needed
 - Host it on GitHub, and share it with us!
 
+## Sample Requests
+
+### Create Company
+
+```json
+{
+  "name": "Amazon",
+  "numberOfEmployees": 1000,
+  "fields": [
+    {
+      "type": "Text",
+      "name": "Country",
+      "value": "USA"
+    },
+    {
+      "type": "Date",
+      "name": "EstablishDate",
+      "value": "1999-11-14T18:35:55"
+    },
+    {
+      "type": "Number",
+      "name": "NumberOfBranches",
+      "value": "7777"
+    }
+  ]
+}
+```
+
+### Update Company
+
+```json
+{
+  "fields": [
+    {
+      "type": "Text",
+      "name": "Country",
+      "value": "USA"
+    }
+  ],
+  "numberOfEmployees": 25000
+}
+```
+
+
+### Create Contact
+
+```json
+{
+  "name": "amer",
+  "companies": ["6190477a06ff0f957c050e26"],
+  "fields": [
+    {
+      "type": "Text",
+      "name": "Firstname",
+      "value": "Amer"
+    },
+    {
+      "type": "Date",
+      "name": "Birthdate",
+      "value": "1975-11-14T17:01:55"
+    },
+    {
+      "type": "Number",
+      "name": "FavoriteNumber",
+      "value": "7"
+    }
+  ]
+}
+```
+
+### Update Contact
+
+```json
+{
+  "fields": [
+    {
+      "type": "Text",
+      "name": "LastName",
+      "value": "Abdullah"
+    }
+  ],
+  "companies": [
+    "6190477a06ff0f957c050e26"
+  ]
+}
+```
+
 ## License
 [MIT](LICENSE)

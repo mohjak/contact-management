@@ -28,6 +28,7 @@ namespace Mohjak.ContactManagement
                 sp.GetRequiredService<IOptions<ContactManagementDatabaseSettings>>().Value);
 
             services.AddSingleton<ContactService>();
+            services.AddSingleton<CompanyService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

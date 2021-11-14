@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 
-namespace Mohjak.ContactManagement.Entities
+namespace Mohjak.ContactManagement.DTOs
 {
     public class CustomField
     {

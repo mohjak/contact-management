@@ -1,7 +1,8 @@
-﻿using Mohjak.ContactManagement.Entities;
-using Mohjak.ContactManagement.Models;
+﻿using Mohjak.ContactManagement.DTOs;
+using Mohjak.ContactManagement.Entities;
+using Mohjak.ContactManagement.Helpers;
+using MongoDB.Bson;
 using MongoDB.Driver;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -36,35 +37,35 @@ namespace Mohjak.ContactManagement.Services
             var contact = new Contact();
             contact.Id = contactDTO.Id;
             contact.Name = contactDTO.Name;
-            contact.Companies = contactDTO.Companies;
-
-            foreach (var field in contactDTO.Fields)
-            {
-                if (field.Type == "Date")
-                {
-                    if (DateTime.TryParse(field.Value, out DateTime dateResult))
-                    {
-                        ((IDictionary<string, object>)contact.Fields)[field.Name] = dateResult;
-                    }
-                }
-
-                if (field.Type == "Text")
-                {
-                    ((IDictionary<string, object>)contact.Fields)[field.Name] = field.Value;
-                }
-
-                if (field.Type == "Number")
-                {
-                    if (int.TryParse(field.Value, out int numberResult))
-                    {
-                        ((IDictionary<string, object>)contact.Fields)[field.Name] = numberResult;
-                    }
-                }
-            }
+            contact.Companies = ToObjectIds(contactDTO.Companies);
+            contact.Fields = FieldsHelper.PopulateFields(contactDTO.Fields);
 
             _contacts.InsertOne(contact);
 
             return contact;
+        }
+
+        public void Update(string id, ContactDTO contactDTO)
+        {
+            var contact = Get(id);
+            contact.Companies = ToObjectIds(contactDTO.Companies);
+            contact.Fields = FieldsHelper.PopulateFields(contactDTO.Fields);
+            _contacts.ReplaceOne(contact => contact.Id == id, contact);
+        }
+
+        public void Remove(string id) =>
+            _contacts.DeleteOne(contact => contact.Id == id);
+
+        // Helper Methods
+        public IList<ObjectId> ToObjectIds(IList<string> ids)
+        {
+            IList<ObjectId> objectIds = new List<ObjectId>();
+            foreach (var id in ids)
+            {
+                objectIds.Add(new ObjectId(id));
+            }
+
+            return objectIds;
         }
     }
 }
