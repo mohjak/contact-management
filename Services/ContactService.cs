@@ -66,6 +66,30 @@ namespace Mohjak.ContactManagement.Services
         public void Remove(string id) =>
             _contacts.DeleteOne(contact => contact.Id == id);
 
+        public IList<Contact> Filter(IList<FieldDTO> fields)
+        {
+            var filter = Builders<Contact>.Filter.Empty;
+
+            foreach (var field in fields)
+            {
+                if (!field.IsExisting)
+                {
+                    filter &= Builders<Contact>.Filter.Eq(x => x.Fields[field.Name], field.Value);
+                }
+                else
+                {
+                    if (field.Name == "Name")
+                    {
+                        filter &= Builders<Contact>.Filter.Eq(x => x.Name, field.Value);
+                    }
+                }
+            }
+
+            var data = _contacts.Find(filter).ToList();
+
+            return data;
+        }
+
         // Helper Methods
         public IList<ObjectId> ToObjectIds(IList<string> ids)
         {

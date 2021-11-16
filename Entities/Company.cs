@@ -1,4 +1,5 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
+using System.Collections.Generic;
 
 namespace Mohjak.ContactManagement.Entities
 {
@@ -9,5 +10,8 @@ namespace Mohjak.ContactManagement.Entities
 
         [BsonElement("numberOfEmployees")]
         public int NumberOfEmployees { get; set; }
+
+        [BsonElement("fields")]
+        public IDictionary<string, object> Fields { get; set; }
     }
 }

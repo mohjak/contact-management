@@ -10,6 +10,5 @@ namespace Mohjak.ContactManagement.DTOs
 
         [BsonElement("numberOfEmployees")]
         public int NumberOfEmployees { get; set; }
-
     }
 }

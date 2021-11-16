@@ -1,41 +1,40 @@
 ﻿using Mohjak.ContactManagement.DTOs;
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
 
 namespace Mohjak.ContactManagement.Helpers
 {
     public static class FieldsHelper
     {
-        public static ExpandoObject PopulateFields(IList<CustomField> fields)
+        public static IDictionary<string, object> PopulateFields(IList<FieldDTO> fields)
         {
-            var fieldObject = new ExpandoObject();
+            var dic = new Dictionary<string, object>();
 
             foreach (var field in fields)
             {
-                if (field.Type == "Date")
+                if (field.DataType == "Date")
                 {
                     if (DateTime.TryParse(field.Value, out DateTime dateResult))
                     {
-                        ((IDictionary<string, object>)fieldObject)[field.Name] = dateResult;
+                        dic[field.Name] = dateResult;
                     }
                 }
 
-                if (field.Type == "Text")
+                if (field.DataType == "Text")
                 {
-                    ((IDictionary<string, object>)fieldObject)[field.Name] = field.Value;
+                    dic[field.Name] = field.Value;
                 }
 
-                if (field.Type == "Number")
+                if (field.DataType == "Number")
                 {
                     if (int.TryParse(field.Value, out int numberResult))
                     {
-                        ((IDictionary<string, object>)fieldObject)[field.Name] = numberResult;
+                        dic[field.Name] = numberResult;
                     }
                 }
             }
 
-            return fieldObject;
+            return dic;
         }
     }
 }

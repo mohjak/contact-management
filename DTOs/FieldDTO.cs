@@ -2,10 +2,13 @@
 
 namespace Mohjak.ContactManagement.DTOs
 {
-    public class CustomField
+    public class FieldDTO
     {
+        [BsonElement("isExisting")]
+        public bool IsExisting { get; set; }
+
         [BsonElement("type")]
-        public string Type { get; set; }
+        public string DataType { get; set; }
 
         [BsonElement("name")]
         public string Name { get; set; }

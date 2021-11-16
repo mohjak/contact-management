@@ -12,6 +12,6 @@ namespace Mohjak.ContactManagement.DTOs
         public string Id { get; set; }
 
         [BsonElement("fields")]
-        public IList<CustomField> Fields { get; set; }
+        public IList<FieldDTO> Fields { get; set; }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Mohjak.ContactManagement.DTOs;
 using Mohjak.ContactManagement.Entities;
-using Mohjak.ContactManagement.Helpers;
 using Mohjak.ContactManagement.Models;
 using Mohjak.ContactManagement.Services;
 using MongoDB.Driver;
@@ -94,6 +93,14 @@ namespace Mohjak.ContactManagement.Controllers
         public async Task<IActionResult> Search(string term)
         {
             var result = await _companyService.Search(term);
+
+            return Ok(result);
+        }
+
+        [HttpPost("filter")]
+        public IActionResult Filter(IList<FieldDTO> fields)
+        {
+            var result = _companyService.Filter(fields);
 
             return Ok(result);
         }

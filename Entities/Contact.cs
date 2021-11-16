@@ -11,5 +11,8 @@ namespace Mohjak.ContactManagement.Entities
 
         [BsonElement("companies")]
         public IList<ObjectId> Companies { get; set; }
+
+        [BsonElement("fields")]
+        public IDictionary<string, object> Fields { get; set; }
     }
 }

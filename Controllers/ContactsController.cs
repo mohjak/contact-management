@@ -96,5 +96,13 @@ namespace Mohjak.ContactManagement.Controllers
 
             return Ok(result);
         }
+
+        [HttpPost("filter")]
+        public IActionResult Filter(IList<FieldDTO> fields)
+        {
+            var result = _contactService.Filter(fields);
+
+            return Ok(result);
+        }
     }
 }
