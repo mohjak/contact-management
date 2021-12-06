@@ -136,6 +136,14 @@ listingId "61adb0227c3cecff3a134302"
 }
 ```
 
+# Releases
+
+## 0.2
+
+- Manage Listings.
+- Manage Fields.
+- Filter Fields.
+
 ## License
 
 [MIT](LICENSE)
