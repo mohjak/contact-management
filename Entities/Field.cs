@@ -1,24 +1,23 @@
 ﻿using Mohjak.ContactManagement.Entities.Enums;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
-namespace Mohjak.ContactManagement.DTOs
+namespace Mohjak.ContactManagement.Entities
 {
-    public class FieldDTO : BaseDTO
+    public class Field : BaseEntity
     {
-        [BsonElement("listingId")]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string ListingId { get; set; }
 
-        [BsonElement("type")]
+        [JsonConverter(typeof(StringEnumConverter))]
+        [BsonRepresentation(BsonType.String)]
         public DataType DataType { get; set; }
-
-        [BsonElement("name")]
         public string Name { get; set; }
 
-        [BsonElement("value")]
         public string Value { get; set; }
 
-        [BsonElement("required")]
         public bool Required { get; set; } = false;
     }
 }

@@ -4,12 +4,12 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Mohjak.ContactManagement.DTOs
 {
-    public class FieldDTO : BaseDTO
+    public class CreateUpdateFieldDTO : BaseDTO
     {
         [BsonElement("listingId")]
         public string ListingId { get; set; }
 
-        [BsonElement("type")]
+        [BsonElement("dataType")]
         public DataType DataType { get; set; }
 
         [BsonElement("name")]
@@ -19,6 +19,6 @@ namespace Mohjak.ContactManagement.DTOs
         public string Value { get; set; }
 
         [BsonElement("required")]
-        public bool Required { get; set; } = false;
+        public bool Required { get; set; }
     }
 }
