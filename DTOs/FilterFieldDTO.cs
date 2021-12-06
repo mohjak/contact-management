@@ -2,13 +2,13 @@
 
 namespace Mohjak.ContactManagement.DTOs
 {
-    public class CustomField
+    public class FilterFieldDTO
     {
-        [BsonElement("type")]
-        public string Type { get; set; }
+        [BsonElement("listingId")]
+        public string ListingId { get; set; }
 
-        [BsonElement("name")]
-        public string Name { get; set; }
+        [BsonElement("id")]
+        public string Id { get; set; }
 
         [BsonElement("value")]
         public string Value { get; set; }

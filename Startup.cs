@@ -21,14 +21,14 @@ namespace Mohjak.ContactManagement
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<ContactManagementDatabaseSettings>(
-                Configuration.GetSection(nameof(ContactManagementDatabaseSettings)));
+            services.Configure<DatabaseSettings>(
+                Configuration.GetSection(nameof(DatabaseSettings)));
 
-            services.AddSingleton<IContactManagementDatabaseSettings>(sp =>
-                sp.GetRequiredService<IOptions<ContactManagementDatabaseSettings>>().Value);
+            services.AddSingleton<IDatabaseSettings>(sp =>
+                sp.GetRequiredService<IOptions<DatabaseSettings>>().Value);
 
-            services.AddSingleton<ContactService>();
-            services.AddSingleton<CompanyService>();
+            services.AddSingleton<ListingService>();
+            services.AddSingleton<FieldService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

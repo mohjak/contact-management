@@ -1,21 +1,14 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using System.Dynamic;
+using MongoDB.Bson.Serialization.IdGenerators;
 
 namespace Mohjak.ContactManagement.Entities
 {
-    public class BaseEntity
+    public class BaseEntity : IEntity
     {
-        public BaseEntity()
-        {
-            Fields = new ExpandoObject();
-        }
-
-        [BsonId]
+        [BsonIgnoreIfDefault]
         [BsonRepresentation(BsonType.ObjectId)]
+        [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
         public string Id { get; set; }
-
-        [BsonElement("fields")]
-        public ExpandoObject Fields { get; set; }
     }
 }
